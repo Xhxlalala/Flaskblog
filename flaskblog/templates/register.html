@@ -1,19 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ image_file }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ current_user.username }}</h2>
-          <p class="text-secondary">{{ current_user.email }}</p>
-        </div>
-      </div>
-      <!-- FORM HERE -->
-
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom md-4">个人信息</legend>
+                <legend class="border-bottom md-4">加入我们！</legend>
                 <div class="form-group">
                     {{ form.username.label(class="form-control-label") }}
 
@@ -26,7 +17,7 @@
                         </div>
                     {% else %}
                         {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
+                    {% endif %} 
                 </div>
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
@@ -42,12 +33,29 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.picture.label() }}
-                    {{ form.picture(class="form-control-file") }}
-                    {% if form.picture.errors %}
-                        {% for error in form.picture.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
             </fieldset>
@@ -56,5 +64,11 @@
             </div>
         </form>
 
+    </div>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            已经有账号了? <a class="ml-2" href="{{ url_for('users.login') }}">登录</a>
+        </small>
     </div>
 {% endblock content %}
